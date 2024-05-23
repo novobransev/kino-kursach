@@ -43,11 +43,18 @@
               </form>
 
               <div class="profile-container">
-                <div class="auth-buttons">
-                    <a href="#" class="login-btn">Войти</a>
-                    <a href="#" class="register-btn">Регистрация</a>
-                    </div>
-              </div>
+                <div class="profile-dropdown">
+                  <div class="profile-info" style="flex-direction: row;">
+                    <img class="profile-picture" src="{% static 'src/img/profile.svg' %}" alt="Profile Picture">
+                    <span class="profile-name">Admin</span>
+                  </div>
+                  <ul class="profile-menu">
+                    <li><a href="#">Мой профиль</a></li>
+                    <li><a href="#">Настройки</a></li>
+                    <li><a href="#">Выйти</a></li>
+                  </ul>
+                </div>
+            </div>
 
         </div>
     </div>
