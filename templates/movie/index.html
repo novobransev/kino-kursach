@@ -1,0 +1,249 @@
+{% extends "movie/base.html" %}
+{% block content %}
+    <div class="container">
+        <div class="content-container">
+
+
+            <div class="hero-section">
+                <!-- HERO SLIDE -->
+                <div class="hero-slide">
+                    <div class="owl-carousel carousel-nav-center" id="hero-carousel">
+                        <!-- SLIDE ITEM -->
+                        {% for b_m in big_movie %}
+                            <div class="hero-slide-item">
+                                <img src="{{ b_m.poster }}" alt="">
+                                <div class="overlay"></div>
+                                <div class="hero-slide-item-content">
+                                    <div class="item-content-wraper">
+                                        <div class="item-content-title top-down">
+                                            {{ b_m.title }}
+                                        </div>
+                                        <div class="movie-infos top-down delay-2">
+                                            <div class="movie-info">
+                                                <i class="bx bxs-star"></i>
+                                                <span>{{ b_m.rating }}</span>
+                                            </div>
+                                            <div class="movie-info">
+                                                <i class="bx bxs-time"></i>
+                                                <span>{{ b_m.duration }}</span>
+                                            </div>
+                                            <div class="movie-info">
+                                                <span>{{ b_m.country }}</span>
+                                            </div>
+                                            <div class="movie-info">
+                                                <span>{{ b_m.age_rating }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="item-content-description top-down delay-4">
+                                            {{ b_m.description }}
+                                        </div>
+                                        <div class="item-action top-down delay-6">
+                                            <a href="{% url 'info_film_page' b_m.id %}" class="btn btn-hover">
+                                                <i class="bx bxs-right-arrow"></i>
+                                                <span>Смотреть</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="movie-list-container" style="display: flex; flex-direction: column;">
+                <h1 class="movie-list-title">НОВИНКИ</h1>
+                <div class="wrapper">
+                    {% for item in movies|slice:":15" %}
+                    <div class="card">
+                    <div class="poster"><img src="{{ item.poster }}" alt="Location Unknown"></div>
+                    <div class="details">
+                        <a href="{% url 'info_film_page' item.id %}" class="title_movie"><h1>{{ item.title }}</h1></a>
+                        <h2>{{ item.release_year }} • {{ item.age_rating }} • {{ item.duration }}</h2>
+                        <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>{{ item.rating }}/10</span>
+                        </div>
+                        <div class="tags">
+                        <span class="tag">{{ item.genre }}</span>
+                        </div>
+                        <p class="desc">
+                            {{ item.description|slice:":250" }}
+                        </p>
+                        <div class="cast">
+                        <h3>Актеры</h3>
+                        <ul>
+                            {% for actor in item.actors.all|slice:":5" %}
+                                    <a href="{% url 'actor_page' actor.id %}"><li><img src="{{ actor.photo }}" alt="{{ actor.name }}" title="{{ actor.name }}"></li></a>
+                            {% endfor %}
+                        </ul>
+                        </div>
+                    </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="movie-list-container" style="display: flex; flex-direction: column;">
+                <h1 class="movie-list-title">ПОПУЛЯРНЫЕ ФИЛЬМЫ</h1>
+                <div class="wrapper">
+                    {% for item in movies|slice:"15:30" %}
+                    <div class="card">
+                    <div class="poster"><img src="{{ item.poster }}" alt="Location Unknown"></div>
+                    <div class="details">
+                        <a href="{% url 'info_film_page' item.id %}" class="title_movie"><h1>{{ item.title }}</h1></a>
+                        <h2>{{ item.release_year }} • {{ item.age_rating }} • {{ item.duration }}</h2>
+                        <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>{{ item.rating }}/10</span>
+                        </div>
+                        <div class="tags">
+                        <span class="tag">{{ item.genre }}</span>
+                        </div>
+                        <p class="desc">
+                            {{ item.description|slice:":250" }}
+                        </p>
+                        <div class="cast">
+                        <h3>Актеры</h3>
+                        <ul>
+                            {% for actor in item.actors.all|slice:":5" %}
+                                    <a href="{% url 'actor_page' actor.id %}"><li><img src="{{ actor.photo }}" alt="{{ actor.name }}" title="{{ actor.name }}"></li></a>
+                            {% endfor %}
+                        </ul>
+                        </div>
+                    </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+                <!-- SPECIAL MOVIE SECTION -->
+
+
+            <div class="section">
+                <div class="hero-slide-item">
+                    <img src="{{ random_movie.poster }}" alt="">
+                    <div class="overlay"></div>
+                    <div class="hero-slide-item-content">
+                        <div class="item-content-wraper">
+                            <div class="item-content-title">
+                                {{ random_movie.title }}
+                            </div>
+                            <div class="movie-infos">
+                                <div class="movie-info">
+                                    <i class="bx bxs-star"></i>
+                                    <span>{{ random_movie.rating }}</span>
+                                </div>
+                                <div class="movie-info">
+                                    <i class="bx bxs-time"></i>
+                                    <span>{{ random_movie.duration }}</span>
+                                </div>
+                                <div class="movie-info">
+                                    <span>{{ random_movie.country }}</span>
+                                </div>
+                                <div class="movie-info">
+                                    <span>{{ random_movie.age_rating }}</span>
+                                </div>
+                            </div>
+                            <div class="item-content-description">
+                                {{ random_movie.description }}
+                            </div>
+                            <div class="item-action">
+                                <a href="{% url 'info_film_page' random_movie.id %}" class="btn btn-hover">
+                                    <i class="bx bxs-right-arrow"></i>
+                                    <span>Смотреть</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="movie-list-container" style="display: flex; flex-direction: column;">
+                <h1 class="movie-list-title">ДУШЕРАЗДИРАЮЩИЕ ФИЛЬМЫ</h1>
+                <div class="wrapper">
+                    {% for item in movies|slice:"30:45" %}
+                    <div class="card">
+                    <div class="poster"><img src="{{ item.poster }}" alt="Location Unknown"></div>
+                    <div class="details">
+                        <a href="{% url 'info_film_page' item.id %}" class="title_movie"><h1>{{ item.title }}</h1></a>
+                        <h2>{{ item.release_year }} • {{ item.age_rating }} • {{ item.duration }}</h2>
+                        <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>{{ item.rating }}/10</span>
+                        </div>
+                        <div class="tags">
+                        <span class="tag">{{ item.genre }}</span>
+                        </div>
+                        <p class="desc">
+                            {{ item.description|slice:":250" }}
+                        </p>
+                        <div class="cast">
+                        <h3>Актеры</h3>
+                        <ul>
+                            {% for actor in item.actors.all|slice:":5" %}
+                                    <a href="{% url 'actor_page' actor.id %}"><li><img src="{{ actor.photo }}" alt="{{ actor.name }}" title="{{ actor.name }}"></li></a>
+                            {% endfor %}
+                        </ul>
+                        </div>
+                    </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="movie-list-container" style="display: flex; flex-direction: column;">
+                <h1 class="movie-list-title">ЛУЧШИЕ МУЛЬТФИЛЬМЫ</h1>
+                <div class="wrapper">
+                    {% for item in movies|slice:"45:" %}
+                    <div class="card">
+                    <div class="poster"><img src="{{ item.poster }}" alt="Location Unknown"></div>
+                    <div class="details">
+                        <a href="{% url 'info_film_page' item.id %}" class="title_movie"><h1>{{ item.title }}</h1></a>
+                        <h2>{{ item.release_year }} • {{ item.age_rating }} • {{ item.duration }}</h2>
+                        <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>{{ item.rating }}/10</span>
+                        </div>
+                        <div class="tags">
+                        <span class="tag">{{ item.genre }}</span>
+                        </div>
+                        <p class="desc">
+                            {{ item.description|slice:":250" }}
+                        </p>
+                        <div class="cast">
+                        <h3>Актеры</h3>
+                        <ul>
+                            {% for actor in item.actors.all|slice:":5" %}
+                                    <a href="{% url 'actor_page' actor.id %}"><li><img src="{{ actor.photo }}" alt="{{ actor.name }}" title="{{ actor.name }}"></li></a>
+                            {% endfor %}
+                        </ul>
+                        </div>
+                    </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

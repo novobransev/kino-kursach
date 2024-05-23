@@ -1,0 +1,73 @@
+
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- OWL CAROUSEL -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{% static 'src/css/style.css' %}">
+  {% block css %}{% endblock %}
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Sen:wght@400;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+        <!-- BOX ICONS -->
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
+
+    <title>Кино-курсач</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="logo-container">
+                <a href="{% url 'index_page' %}"><img src="{% static 'src/img/logo.svg' %}" alt="Логотип" style="height: 64px; width: 130px;"></a>
+            </div>
+            <div class="menu-container">
+                <ul class="menu-list">
+                    <a href="{% url 'index_page' %}" class="link-header-nav"><li class="menu-list-item active">Главная</a></li>
+                    <a href="{% url 'index_page' %}" class="link-header-nav"><li class="menu-list-item">Новинки</a></li>
+                    <a href="{% url 'index_page' %}" class="link-header-nav"><li class="menu-list-item">Фильмы</a></li>
+                    <a href="{% url 'index_page' %}" class="link-header-nav"><li class="menu-list-item">Сериалы</a></li>
+                    <a href="{% url 'index_page' %}" class="link-header-nav"><li class="menu-list-item">Мультфильмы</a></li>
+                </ul>
+            </div>
+
+            <form onsubmit="event.preventDefault();" role="search">
+                <label for="search">Search for stuff</label>
+                <input id="search" type="search" placeholder="Поиск..." autofocus required />
+                <button type="submit" class="button">Go</button>
+              </form>
+
+              <div class="profile-container">
+                <div class="auth-buttons">
+                    <a href="#" class="login-btn">Войти</a>
+                    <a href="#" class="register-btn">Регистрация</a>
+                    </div>
+              </div>
+
+        </div>
+    </div>
+    <div class="sidebar">
+        <a href="{% url 'index_page' %}" class="left-menu-link"><i class="left-menu-icon fas fa-home"></i></a>
+        <a href="{% url 'user_profile_page' %}" class="left-menu-link"><i class="left-menu-icon fas fa-users"></i></a>
+        <a href="{% url 'user_profile_page' %}" class="left-menu-link"><i class="left-menu-icon fas fa-bookmark"></i></a>
+        <a href="{% url 'user_profile_page' %}" class="left-menu-link"><i class="left-menu-icon fas fa-shopping-cart"></i></a>
+    </div>
+    {% block content %}{% endblock %}
+
+    <footer style="padding: 30px; text-align: center; background-color: black; color: #ffffff;">
+        <h3>&copy Все права защищены</h3>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- OWL CAROUSEL -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous"></script>
+
+    <script src="{% static 'src/js/app.js' %}"></script>
+    {% block js %}{% endblock %}
+</body>
+
+</html>

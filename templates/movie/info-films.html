@@ -1,0 +1,90 @@
+{% extends "movie/base.html" %}
+{% load static %}
+{% block content %}
+<main>
+        <section class="movies-info">
+          <div class="movie-details">
+            <img src="{{ info_film.poster }}" alt="Постер фильма">
+            <div class="movie-description">
+              <h2>{{ info_film.title }}</h2>
+
+                    <div class="rating" style="margin-bottom: 20px;">
+                        <i class="fas fa-star" style="color: #1f83ed;"></i>
+                        <i class="fas fa-star" style="color: #1f83ed;"></i>
+                        <i class="fas fa-star" style="color: #1f83ed;"></i>
+                        <i class="fas fa-star" style="color: #1f83ed;"></i>
+                        <i class="far fa-star" style="color: #1f83ed;"></i>
+                        <span>{{ info_film.rating }}/10</span>
+                    </div>
+
+              <p>Жанр: <span>{{ info_film.genre }}</span></p>
+              <p>Год выпуска: <span>{{ info_film.release_year }}</span></p>
+              <p>Режиссер: <span>{{ info_film.director }}</span></p>
+                <p>Продолжительность: <span>{{ info_film.duration }}</span></p>
+                <p>Возрастное ограничение: <span>{{ info_film.age_rating }}</span></p>
+                <p>Страна: <span>{{ info_film.country }}</span></p>
+                <p>В главных ролях: <span>{% for actor in info_film.actors.all %}<a href="{% url 'actor_page' actor.id  %}">{{ actor.name }}, </a>{% endfor %}</span></p>
+              <p>Описание: <span>{{ info_film.description }}</span></p>
+            </div>
+          </div>
+        </section>
+
+
+        <div class="player-container">
+          <div class="player">
+            <h2 class="watch-online">Смотреть онлайн</h2>
+              {% if info_film.trailer %}
+            <iframe width="800px" height="510px" style="border-radius: 10px;" src="{{ info_film.trailer }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                {% else %}
+              <iframe width="800px" height="510px" src="https://www.youtube.com/embed/-7sp1qbQwH8?si=D4ikxWaXDaDe2k6G" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              {% endif %}
+          </div>
+        </div>
+      
+        <section class="reviews" id="reviews">
+
+            <div class="review-form">
+              <h2>Оставить отзыв</h2>
+              <form style="background: none;">
+                <div class="form-group">
+                  <label for="review-text">Ваш отзыв:</label>
+                  <textarea id="review-text" name="review-text" rows="4" style="width: 800px; height: 200px;background-color: #141414;color: white;border-radius: 10px;" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="background-color: #3498db; border-radius: 10px; margin-top: 10px; margin-bottom: 30px">Отправить</button>
+              </form>
+            </div>
+
+
+
+            {% if review %}
+                {% for rev in review %}
+                    {% if rev.movie.id == info_film.id %}
+                          <h2>Отзывы</h2>
+                          <div class="review-list">
+                            <div class="review-card">
+                              <img src="{{ profile_avatar }}" alt="Аватар пользователя">
+                              <div class="review-content">
+                                <h3>{{ rev.user.username }}</h3>
+                                <p>{{ rev.text }}</p>
+                              </div>
+                            </div>
+
+                          </div>
+
+                          <div class="pagination">
+                            <button class="prev-page" disabled>Предыдущая</button>
+                            <span class="current-page">1</span>
+                            <button class="next-page">Следующая</button>
+                          </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <h2>Нет Отзывов</h2>
+            {% endif %}
+
+
+        </section>
+      </main>
+{% endblock %}
+
+{% block js %}<script src="{% static 'src/js/pagination.js' %}"></script>{% endblock %}

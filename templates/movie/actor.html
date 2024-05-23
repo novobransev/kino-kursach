@@ -1,0 +1,56 @@
+{% extends "movie/base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'src/css/profileFilmsCards.css' %}">
+<link rel="stylesheet" href="{% static 'src/css/actor.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="actor-page">
+        <div class="actor-card">
+          <div class="actor-image">
+            <img src="{{ info_actor.photo }}" alt="Actor Name">
+          </div>
+          <div class="actor-info">
+            <h2>{{ info_actor.name }}</h2>
+
+            <h3 style="margin-top: 20px;">Фильмография</h3>
+                <div class="wrapper">
+                    {% for item in movie %}
+                        {% if info_actor in item.actors.all %}
+                            <div class="card">
+                            <div class="poster"><img src="{{ item.poster }}" alt="Location Unknown"></div>
+                            <div class="details">
+                                <a href="{% url 'info_film_page' item.id %}" class="title_movie"><h1>{{ item.title }}</h1></a>
+                                <h2>{{ item.release_year }} • {{ item.age_rating }} • {{ item.duration }}</h2>
+                                <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>{{ item.rating }}/10</span>
+                                </div>
+                                <div class="tags">
+                                <span class="tag">{{ item.genre }}</span>
+                                </div>
+                                <p class="desc">
+                                    {{ item.description|slice:":250" }}
+                                </p>
+                                <div class="cast">
+                                <h3>Актеры</h3>
+                                <ul>
+                                    {% for actor in item.actors.all|slice:":5" %}
+                                            <a href="{% url 'actor_page' actor.id %}"><li><img src="{{ actor.photo }}" alt="{{ actor.name }}" title="{{ actor.name }}"></li></a>
+                                    {% endfor %}
+                                </ul>
+                                </div>
+                            </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+          </div>
+        </div>
+      </div>
+{% endblock %}
