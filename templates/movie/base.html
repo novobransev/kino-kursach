@@ -31,7 +31,7 @@
                     <a href="{% url 'index_page' %}" class="link-header-nav"><li class="menu-list-item active">Главная</a></li>
                     <a href="{% url 'index_page' %}" class="link-header-nav"><li class="menu-list-item">Новинки</a></li>
                     <a href="{% url 'index_page' %}" class="link-header-nav"><li class="menu-list-item">Фильмы</a></li>
-                    <a href="{% url 'index_page' %}" class="link-header-nav"><li class="menu-list-item">Сериалы</a></li>
+                    <a href="{% url 'index_page' %}" class="link-header-nav"><li class="menu-list-item">Драмы</a></li>
                     <a href="{% url 'index_page' %}" class="link-header-nav"><li class="menu-list-item">Мультфильмы</a></li>
                 </ul>
             </div>
@@ -42,19 +42,30 @@
                 <button type="submit" class="button">Go</button>
               </form>
 
-              <div class="profile-container">
-                <div class="profile-dropdown">
-                  <div class="profile-info" style="flex-direction: row;">
-                    <img class="profile-picture" src="{% static 'src/img/profile.svg' %}" alt="Profile Picture">
-                    <span class="profile-name">Admin</span>
-                  </div>
-                  <ul class="profile-menu">
-                    <li><a href="#">Мой профиль</a></li>
-                    <li><a href="#">Настройки</a></li>
-                    <li><a href="#">Выйти</a></li>
-                  </ul>
+            {% load socialaccount %}
+
+                {% if not user.is_authenticated %}
+                    <div class="profile-container">
+                        <div class="auth-buttons">
+                            <a href="{% provider_login_url 'google' %}" class="login-btn">Войти</a>
+                            <a href="{% provider_login_url 'google' %}" class="register-btn">Регистрация</a>
+                            </div>
+                      </div>
+                {% else %}
+            <div class="profile-container">
+                    <div class="profile-dropdown">
+                      <div class="profile-info" style="flex-direction: row;">
+                        <img class="profile-picture" src="{% block avatar %}{% endblock %}" alt="Profile Picture">
+                        <span class="profile-name">{{ user.username }}</span>
+                      </div>
+                      <ul class="profile-menu">
+                        <li><a href="{% url 'user_profile_page' %}">Мой профиль</a></li>
+                        <li><a href="{% url 'logout' %}">Выйти</a></li>
+                      </ul>
+                    </div>
                 </div>
-            </div>
+
+            {% endif %}
 
         </div>
     </div>

@@ -1,4 +1,6 @@
 {% extends "movie/base.html" %}
+{% load static %}
+{% block avatar %}{% if profile_avatar %}{{ profile_avatar }}{% else %}{% static 'src/img/profile.svg' %}{% endif %}{% endblock %}
 {% block content %}
     <div class="container">
         <div class="content-container">
@@ -57,7 +59,7 @@
             <div class="movie-list-container" style="display: flex; flex-direction: column;">
                 <h1 class="movie-list-title">НОВИНКИ</h1>
                 <div class="wrapper">
-                    {% for item in movies|slice:":15" %}
+                    {% for item in new_movies %}
                     <div class="card">
                     <div class="poster"><img src="{{ item.poster }}" alt="Location Unknown"></div>
                     <div class="details">
@@ -93,7 +95,7 @@
             <div class="movie-list-container" style="display: flex; flex-direction: column;">
                 <h1 class="movie-list-title">ПОПУЛЯРНЫЕ ФИЛЬМЫ</h1>
                 <div class="wrapper">
-                    {% for item in movies|slice:"15:30" %}
+                    {% for item in popular_movies %}
                     <div class="card">
                     <div class="poster"><img src="{{ item.poster }}" alt="Location Unknown"></div>
                     <div class="details">
@@ -175,7 +177,7 @@
             <div class="movie-list-container" style="display: flex; flex-direction: column;">
                 <h1 class="movie-list-title">ДУШЕРАЗДИРАЮЩИЕ ФИЛЬМЫ</h1>
                 <div class="wrapper">
-                    {% for item in movies|slice:"30:45" %}
+                    {% for item in sad_movies %}
                     <div class="card">
                     <div class="poster"><img src="{{ item.poster }}" alt="Location Unknown"></div>
                     <div class="details">
@@ -211,7 +213,7 @@
             <div class="movie-list-container" style="display: flex; flex-direction: column;">
                 <h1 class="movie-list-title">ЛУЧШИЕ МУЛЬТФИЛЬМЫ</h1>
                 <div class="wrapper">
-                    {% for item in movies|slice:"45:" %}
+                    {% for item in multmovies %}
                     <div class="card">
                     <div class="poster"><img src="{{ item.poster }}" alt="Location Unknown"></div>
                     <div class="details">

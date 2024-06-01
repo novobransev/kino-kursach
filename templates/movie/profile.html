@@ -1,20 +1,30 @@
 {% extends "movie/base.html" %}
 {% load static %}
+{% block avatar %}{% if profile_avatar_in_block %}{{ profile_avatar_in_block }}{% else %}{% static 'src/img/profile.svg' %}{% endif %}{% endblock %}
 {% block content %}
 
 
     {% block css %}<link rel="stylesheet" href="{% static 'src/css/profileFilmsCards.css' %}">{% endblock %}
+{% if user.is_authenticated %}
 
     <div class="main-container-profile">
     <div class="container-profile">
         <h1 style="text-align: center; padding-bottom: 20px; color: #ffffff;">{{ user_profile.user.username }}</h1>
+        <form action="" method="post" class="form-style" enctype="multipart/form-data">
         <div class="profile-info">
-            <img src="{{ user_profile.avatar.url }}" alt="Аватар" class="avatar">
-            <input type="file" id="avatar-upload" accept="image/*">
+            <img src="{% if user_profile.avatar %}{{ user_profile.avatar.url }}{% else %}{% static 'src/img/profile.svg' %}{% endif %}" alt="Аватар" class="avatar" id="avatar-image">
+            <input type="file" id="avatar-upload" name="avatar">
             <label for="avatar-upload">Изменить аватар</label>
+
             <h4 style="padding-top: 10px; padding-bottom: 10px; color: #ffffff;">Изменить имя</h4>
-            <input type="text" id="username" placeholder="Имя пользователя">
+
+                <input type="text" id="username" name="username" placeholder="Имя пользователя">
+
+
+
+
         </div>
+
 
         {% if user_profile.favorite_movies.all %}
             <h2>Избранные фильмы</h2>
@@ -103,12 +113,23 @@
                     </div>
                 </div>
         {% else %}
-            <h2>Нет купленных фильмов</h2>
+            <h2>Нет купленных фильмов (Пока не реализованно)</h2>
         {% endif %}
 
 
-        <button class="save-button">Сохранить</button>
+            {% csrf_token %}
+             <button class="save-button" type="submit">Сохранить</button>
+            </form>
+
+
     </div>
 </div>
-
+{% else %}
+ <div class="main-container-profile">
+    <div class="container-profile">
+        <h1 style="text-align: center; padding-bottom: 20px; color: #ffffff;">Вы еще не зарегистрировались</h1>
+    </div>
+ </div>
+{% endif %}
+<script src="{% static 'src/js/avatar.js' %}"></script>
 {% endblock %}

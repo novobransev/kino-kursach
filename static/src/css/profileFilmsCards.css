@@ -42,3 +42,10 @@
     border-radius: 50%;
     color: white;
 }
+
+.form-style {
+    position: relative;
+    width: 100%;
+    background: none;
+    border-radius: var(--rad);
+}

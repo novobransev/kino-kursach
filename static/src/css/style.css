@@ -1529,10 +1529,15 @@ label[for="avatar-upload"] {
 }
 
 
+.castom {
+    float: right;
+    margin: 0;
+}
 
-
-
-
+.castom:hover {
+    color: red;
+    cursor: pointer;
+}
 
 
 

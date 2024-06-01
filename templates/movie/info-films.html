@@ -1,12 +1,42 @@
 {% extends "movie/base.html" %}
 {% load static %}
+{% block avatar %}{% if profile_avatar_in_block %}{{ profile_avatar_in_block }}{% else %}{% static 'src/img/profile.svg' %}{% endif %}{% endblock %}
 {% block content %}
 <main>
         <section class="movies-info">
           <div class="movie-details">
             <img src="{{ info_film.poster }}" alt="Постер фильма">
             <div class="movie-description">
-              <h2>{{ info_film.title }}</h2>
+              <h2>{{ info_film.title }}<i class="left-menu-icon fas fa-bookmark castom"></i></h2>
+                <script>
+                  document.addEventListener('DOMContentLoaded', function() {
+                    const bookmarkIcon = document.querySelector('.castom');
+
+                    bookmarkIcon.addEventListener('click', function() {
+                      const movieId = '{{ info_film.pk }}';
+                      const csrfToken = '{{ csrf_token }}';
+
+                      fetch(`/toggle-favorite-movie/${movieId}/`, {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                          'X-CSRFToken': csrfToken
+                        }
+                      })
+                      .then(response => response.json())
+                      .then(data => {
+                        if (data.is_favorite) {
+                          bookmarkIcon.classList.remove('fas');
+                          bookmarkIcon.classList.add('far');
+                        } else {
+                          bookmarkIcon.classList.add('fas');
+                          bookmarkIcon.classList.remove('far');
+                        }
+                      })
+                      .catch(error => console.error('Error:', error));
+                    });
+                  });
+                </script>
 
                     <div class="rating" style="margin-bottom: 20px;">
                         <i class="fas fa-star" style="color: #1f83ed;"></i>
@@ -27,6 +57,8 @@
               <p>Описание: <span>{{ info_film.description }}</span></p>
             </div>
           </div>
+<iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=133FOMUJJ19.240601&" width="330" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+
         </section>
 
 
@@ -40,12 +72,13 @@
               {% endif %}
           </div>
         </div>
-      
-        <section class="reviews" id="reviews">
 
+        <section class="reviews" id="reviews">
+{% if user.is_authenticated %}
             <div class="review-form">
               <h2>Оставить отзыв</h2>
-              <form style="background: none;">
+              <form style="background: none;" method="post">
+                  {% csrf_token %}
                 <div class="form-group">
                   <label for="review-text">Ваш отзыв:</label>
                   <textarea id="review-text" name="review-text" rows="4" style="width: 800px; height: 200px;background-color: #141414;color: white;border-radius: 10px;" required></textarea>
@@ -53,38 +86,51 @@
                 <button type="submit" class="btn btn-primary" style="background-color: #3498db; border-radius: 10px; margin-top: 10px; margin-bottom: 30px">Отправить</button>
               </form>
             </div>
+            {% endif %}
 
 
 
-            {% if review %}
+{% if review %}
+            <h2>Отзывы</h2>
+            <div class="review-list">
                 {% for rev in review %}
                     {% if rev.movie.id == info_film.id %}
-                          <h2>Отзывы</h2>
-                          <div class="review-list">
+
                             <div class="review-card">
-                              <img src="{{ profile_avatar }}" alt="Аватар пользователя">
+                              <img src="{% if profile_avatar %}
+                              {% for ava in profile_avatar %}
+                                {% if ava.user == rev.user %}
+                                    {% if ava.avatar %}
+                                        {{ ava.avatar.url }}
+
+                                     {% endif %}
+                                {% endif %}
+
+                                 {% endfor %}
+
+                               {% else %}
+                               {% static 'src/img/profile.svg' %}
+                               {% endif %}" alt="Аватар пользователя">
                               <div class="review-content">
                                 <h3>{{ rev.user.username }}</h3>
-                                <p>{{ rev.text }}</p>
+                                {{ rev.text|linebreaksbr }}
                               </div>
                             </div>
-
-                          </div>
-
-                          <div class="pagination">
-                            <button class="prev-page" disabled>Предыдущая</button>
-                            <span class="current-page">1</span>
-                            <button class="next-page">Следующая</button>
-                          </div>
-                    {% endif %}
+                        {% endif %}
                 {% endfor %}
-            {% else %}
-                <h2>Нет Отзывов</h2>
+                </div>
+
+            <div class="pagination">
+                    <button class="prev-page" disabled>Предыдущая</button>
+                    <span class="current-page">1</span>
+                    <button class="next-page">Следующая</button>
+                  </div>
             {% endif %}
 
 
         </section>
       </main>
+<script src="{% static 'src/js/pagination.js' %}"></script>
 {% endblock %}
 
-{% block js %}<script src="{% static 'src/js/pagination.js' %}"></script>{% endblock %}
+{% block js %}{% endblock %}

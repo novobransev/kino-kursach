@@ -4,7 +4,7 @@ import json
 # Создаем пустой список для хранения данных
 data = []
 
-for i in range(301, 400):
+for i in range(301, 410):
     url = f'https://api.kinopoisk.dev/v1.4/movie/{i}'
     headers = {
         'X-API-KEY': 'AC8BFMV-RPV4M74-GEEPPBF-CYTJXA2',
@@ -25,5 +25,5 @@ for i in range(301, 400):
 with open('kinopoisk.json', 'w', encoding='utf-8') as f:
     json.dump(data, f, ensure_ascii=False, indent=4)
 
-print('Все данные успешно записаны в файл cinema.json.')
+print('Все данные успешно записаны в файл kinopoisk.json.')
 

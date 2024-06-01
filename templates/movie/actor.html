@@ -1,5 +1,6 @@
 {% extends "movie/base.html" %}
 {% load static %}
+{% block avatar %}{% if profile_avatar_in_block %}{{ profile_avatar_in_block }}{% else %}{% static 'src/img/profile.svg' %}{% endif %}{% endblock %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'src/css/profileFilmsCards.css' %}">
 <link rel="stylesheet" href="{% static 'src/css/actor.css' %}">
