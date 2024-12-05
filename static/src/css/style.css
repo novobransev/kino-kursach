@@ -1026,6 +1026,7 @@ footer .content {
 
     .hero-slide-item {
         padding-top: 50%;
+        height: 100%;
     }
 
     .item-content-wraper {
@@ -1038,12 +1039,8 @@ footer .content {
         font-size: 12px;
     }
 
-    .container {
-        padding: 0 15px;
-    }
-
     .hero-slide-item {
-        height: max-content;
+        height: 100%;
         padding-top: unset;
     }
 
@@ -1090,6 +1087,16 @@ footer .content {
 
     .nav-menu.active {
         left: 0;
+    }
+
+
+
+    .sidebar {
+        display: none;
+    }
+
+    .content-container {
+        margin-left: 0;
     }
 }
 
@@ -1539,6 +1546,11 @@ label[for="avatar-upload"] {
     cursor: pointer;
 }
 
+@media (max-width: 1200px) {
+    .card {
+        flex: none; /* Стили для ширин менее 1200px */
+    }
+}
 
 
 

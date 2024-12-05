@@ -131,6 +131,7 @@ STATICFILES_DIRS = [
    BASE_DIR / 'static',
 ]
 
+
 FIXTURE_DIRS = [
     BASE_DIR / 'fixtures',
 ]
